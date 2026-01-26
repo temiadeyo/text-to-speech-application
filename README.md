@@ -201,7 +201,6 @@ With these changes in place, only the hosted frontend can successfully call the 
 A short walkthrough showing the full application flow, from entering text in the UI to playing the generated audio.
 
 ▶️ [Watch the demo video](videos/demo.mp4)
-https://github.com/temiadeyo/text-to-speech-application/raw/main/videos/demo.mp4
 
 
 ----------
