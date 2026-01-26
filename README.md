@@ -4,8 +4,6 @@
 
 This project is a fully serverless **Text-to-Speech web application** built on AWS. It allows a user to enter text in a web browser and receive spoken audio generated using **Amazon Polly**.
 
-![Text Narrator web interface](images/ui-screenshot.png)
-
 The application uses modern AWS managed services and follows best practices such as:
 -   Serverless architecture (no servers to manage).
 -   Secure access to audio files using presigned URLs.
@@ -17,7 +15,7 @@ The application uses modern AWS managed services and follows best practices such
 
 **User → Web UI → API Gateway → Lambda → Amazon Polly → Amazon S3 → User**
 
-![High-level architecture diagram](images/high-level-architecture.png)
+![Text Narrator web interface](images/ui-screenshot.png)
 
 1.  The user enters text in a web interface.
 2.  The frontend sends the text to an API endpoint.  
