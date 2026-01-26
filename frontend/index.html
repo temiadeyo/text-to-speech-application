@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Speech</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #e0e0e0;
+    }
+
+    .container {
+      background: #1e1e1e;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+      color: #f5f5f5;
+    }
+
+    p.subtitle {
+      font-size: 1.05rem;
+      color: #a0a0a0;
+      margin-bottom: 25px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 15px;
+      font-size: 1rem;
+      border-radius: 15px;
+      border: 1px solid #333;
+      resize: none;
+      background: #2a2a2a;
+      color: #f0f0f0;
+    }
+
+    textarea::placeholder {
+      color: #8a8a8a;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #555;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      background: #333;
+      color: #f0f0f0;
+      border: none;
+      padding: 15px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    button:hover:not(:disabled) {
+      background: #444;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      display: none;
+      margin: 20px auto;
+      width: 36px;
+      height: 36px;
+      border: 4px solid #333;
+      border-top: 4px solid #888;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 25px;
+      filter: invert(1);
+    }
+
+    .tech-info {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Text to Speech</h1>
+    <p class="subtitle">🔊 Convert your text into spoken audio</p>
+
+    <textarea id="text" placeholder="Type or paste text here..."></textarea>
+
+    <button id="convertBtn" onclick="convert()">Convert to Speech</button>
+
+    <div id="spinner" class="spinner"></div>
+
+    <audio id="player" controls></audio>
+
+    <div class="tech-info">
+      Built with AWS serverless services: Lambda, API Gateway, Amazon Polly and S3
+    </div>
+  </div>
+
+  <script>
+  // 👇 Replace this with your actual API endpoint
+    const API_URL = "https://YOUR-API-ID.execute-api.us-east-1.amazonaws.com/text-to-speech";
+
+    async function convert() {
+      const text = document.getElementById("text").value.trim();
+      if (!text) return;
+
+      const spinner = document.getElementById("spinner");
+      const btn = document.getElementById("convertBtn");
+      const player = document.getElementById("player");
+
+      spinner.style.display = "block";
+      btn.disabled = true;
+      player.src = "";
+
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text })
+        });
+
+        if (!res.ok) throw new Error("API request failed");
+
+        const data = await res.json();
+        player.src = data.audioUrl;
+        player.play();
+      } catch (e) {
+        alert("Error generating speech");
+        console.error(e);
+      } finally {
+        spinner.style.display = "none";
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
