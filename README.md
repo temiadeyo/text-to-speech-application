@@ -15,7 +15,7 @@ The application uses modern AWS managed services and follows best practices such
 
 **User → Web UI → API Gateway → Lambda → Amazon Polly → Amazon S3 → User**
 
-![Text Narrator web interface](images/text-to-speech-application.png)
+![Text Narrator web interface](images/text-to-speech-application2.png)
 
 1.  The user enters text in a web interface.
 2.  The frontend sends the text to an API endpoint.  
