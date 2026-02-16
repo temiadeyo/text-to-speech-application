@@ -15,14 +15,14 @@ The application uses modern AWS managed services and follows best practices such
 
 **User → Web UI → API Gateway → Lambda → Amazon Polly → Amazon S3 → User**
 
-![Text Narrator web interface](images/ui-screenshot.png)
+![Text Narrator web interface](images/text-to-speech-application.png)
 
 1.  The user enters text in a web interface.
 2.  The frontend sends the text to an API endpoint.  
 3.  AWS Lambda processes the request.   
 4.  Amazon Polly converts text to speech.
 5.  The audio file is stored in Amazon S3.
-6.  A temporary presigned URL is returned.
+6.  A temporary pre-signed Amazon S3 URL is returned to the client.
 7.  The browser plays the audio.
     
 ----------
@@ -49,7 +49,7 @@ The application uses modern AWS managed services and follows best practices such
 
 ##  Development Approach
 
-This project was built in **clear stages**, rather than starting with a web application immediately. Each stage was validated before moving to the next, ensuring that the underlying services worked correctly before adding complexity.
+This project was built incrementally in clearly defined stages, rather than starting with a web application immediately. Each stage was validated before moving to the next, ensuring that the underlying services worked correctly before adding complexity.
 
 The overall progression was as follows:
 1.  Explore Amazon Polly directly.
@@ -190,7 +190,7 @@ During early development, CORS is configured permissively to allow requests from
 
 Once the frontend is live, CORS settings are deliberately tightened. API Gateway is updated to replace the wildcard (`*`) origin with the Amplify-hosted frontend domain, ensuring that only requests from the deployed application are accepted.
 
-In parallel, the Lambda function response is updated to return a matching `Access-Control-Allow-Origin` header. Aligning CORS configuration at both the API Gateway and Lambda levels prevents inconsistent browser behavior and reinforces access control.
+In parallel, the Lambda function response is updated to return a matching `Access-Control-Allow-Origin` header. Aligning CORS configuration at both the API Gateway and Lambda levels prevents inconsistent browser behavior and reinforces frontend-only access to the API.
 
 With these changes in place, only the hosted frontend can successfully call the API, reducing the risk of unintended or unauthorized usage.
 
