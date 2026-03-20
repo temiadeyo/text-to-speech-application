@@ -13,8 +13,6 @@ The application uses modern AWS managed services and follows best practices such
 
 ## High-Level Architecture
 
-**User → Web UI → API Gateway → Lambda → Amazon Polly → Amazon S3 → User**
-
 ![Text Narrator web interface](images/text-to-speech-application-diagram.png)
 
 1.  The user enters text in a web interface.
